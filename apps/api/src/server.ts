@@ -23,9 +23,25 @@ const PORT = process.env.PORT || 5000;
 // 1. Helmet : Sécurise les en-têtes HTTP
 app.use(helmet());
 
-// 2. CORS : Autorise les requêtes du frontend et de l'admin
+// 2. CORS : Autorise explicitement les URLs de dev et de production (Infaillible)
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://panda-holding-web.vercel.app',
+    'https://panda-holding-admin.vercel.app'
+];
+
 app.use(cors({
-    origin: [process.env.FRONTEND_URL || 'http://localhost:5173', process.env.ADMIN_URL || 'http://localhost:5174'],
+    origin: function (origin, callback) {
+        // Autorise les requêtes sans origine (ex: extensions navigateur, curl, ou tests internes)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
