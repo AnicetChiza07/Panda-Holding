@@ -5,6 +5,7 @@ import { PageHero } from '../components/common/PageHero';
 import { SafeImage } from '../components/common/SafeImage';
 import { CardSkeleton } from '../components/common/Skeletons'; // ✅ AJOUT DU SKELETON
 import { projectService, type ApiProject } from '../services/projectService';
+import { SEO } from '../components/common/SEO';
 
 // ==========================================
 // TYPES & MAPPING
@@ -69,6 +70,12 @@ export function PortfolioPage() {
     if (loading) {
         return (
             <>
+                <SEO 
+                    title="Nos Réalisations et Projets | Panda Holding"
+                    description="Découvrez les projets réussis et les réalisations concrètes de Panda Holding, témoignant de notre engagement pour le développement durable en RDC."
+                    path="/portfolio"
+                />
+
                 <PageHero 
                     title="Nos Réalisations" 
                     highlight="& Projets d'Impact" 

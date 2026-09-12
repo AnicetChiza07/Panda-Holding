@@ -4,6 +4,7 @@ import { PageHero } from '../components/common/PageHero';
 import { MapPin, Phone, Mail, Send, CheckCircle, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { messageService } from '../services/messageService';
+import { SEO } from '../components/common/SEO';
 
 // ==========================================
 // TYPES
@@ -31,14 +32,12 @@ export function ContactPage() {
     const [isSuccess, setIsSuccess] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // ✅ Utilisation de ChangeEvent importé en tant que type
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { id, value } = e.target;
         setFormData(prev => ({ ...prev, [id]: value }));
         if (error) setError(null);
     };
 
-    // ✅ Utilisation de React.FormEvent directement pour éviter l'import déprécié
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitting(true);
@@ -62,6 +61,12 @@ export function ContactPage() {
 
     return (
         <>
+            <SEO 
+                title="Contactez-nous | Panda Holding Kinshasa"
+                description="Prenez contact avec l'équipe de Panda Holding à Kinshasa. Téléphone, e-mail et formulaire pour vos projets d'investissement et de partenariat en RDC."
+                path="/contact"
+            />
+
             <PageHero
                 title="Contact"
                 highlight="& Échangeons"
@@ -100,7 +105,7 @@ export function ContactPage() {
                     {/* GRILLE 50/50 */}
                     <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
                         
-                        {/* COLONNE GAUCHE : INFOS */}
+                        {/* COLONNE GAUCHE : INFOS DE CONTACT (MISE À JOUR & CLIQUABLE) */}
                         <div className="flex items-center justify-center animate-fadeInUp">
                             <div className="bg-primary rounded-3xl flex flex-col items-center justify-center p-8 lg:p-10 text-white relative overflow-hidden w-full h-full border border-gray-200/50 dark:border-white/5">
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
@@ -133,7 +138,13 @@ export function ContactPage() {
                                             </div>
                                             <div>
                                                 <h4 className="font-semibold text-white text-sm mb-0.5">Téléphone</h4>
-                                                <p className="text-white/70 text-sm">+243 000 000 000</p>
+                                                {/* ✅ Lien cliquable pour appel direct sur mobile */}
+                                                <a 
+                                                    href="tel:+243897702531" 
+                                                    className="text-white/70 text-sm hover:text-accent transition-colors duration-300"
+                                                >
+                                                    +243 897 702 531
+                                                </a>
                                             </div>
                                         </div>
 
@@ -143,7 +154,13 @@ export function ContactPage() {
                                             </div>
                                             <div>
                                                 <h4 className="font-semibold text-white text-sm mb-0.5">Email</h4>
-                                                <p className="text-white/70 text-sm">contact@pandaholding.cd</p>
+                                                {/* ✅ Lien cliquable pour ouvrir le client mail */}
+                                                <a 
+                                                    href="mailto:arthurmeshearji@gmail.com" 
+                                                    className="text-white/70 text-sm hover:text-accent transition-colors duration-300 break-all"
+                                                >
+                                                    arthurmeshearji@gmail.com
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -227,6 +244,13 @@ export function ContactPage() {
                                     </div>
                                 )}
 
+                                {isSuccess && (
+                                    <div className="flex items-center gap-2 p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 text-sm">
+                                        <CheckCircle className="w-4 h-4 flex-shrink-0" />
+                                        <span>Message envoyé avec succès ! Nous vous répondrons rapidement.</span>
+                                    </div>
+                                )}
+
                                 <Button 
                                     type="submit"
                                     variant="primary"
@@ -234,12 +258,7 @@ export function ContactPage() {
                                     className="w-full"
                                     disabled={isSubmitting || isSuccess}
                                 >
-                                    {isSuccess ? (
-                                        <>
-                                            <CheckCircle className="w-5 h-5" />
-                                            Message envoyé avec succès !
-                                        </>
-                                    ) : isSubmitting ? (
+                                    {isSubmitting ? (
                                         <>
                                             <Loader2 className="w-5 h-5 animate-spin" />
                                             Envoi en cours...

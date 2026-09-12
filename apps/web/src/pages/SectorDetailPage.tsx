@@ -7,7 +7,9 @@ import {
 } from 'lucide-react';
 import { SafeImage } from '../components/common/SafeImage'; 
 import { sectorService, type ApiSector } from '../services/sectorService';
-import { HeroSkeleton, TextSkeleton } from '../components/common/Skeletons'; // ✅ AJOUT DES SKELETONS
+import { HeroSkeleton, TextSkeleton } from '../components/common/Skeletons';
+// ✅ AJOUT DE L'IMPORT SEO
+import { SEO } from '../components/common/SEO';
 
 // ==========================================
 // TYPES STRICTS
@@ -118,7 +120,6 @@ export function SectorDetailPage() {
         fetchData();
     }, [slug]);
 
-    // ✅ ÉTAT DE CHARGEMENT AVEC SKELETONS (Remplace le simple spinner)
     if (loading) {
         return (
             <div className="min-h-screen bg-white dark:bg-primary">
@@ -143,6 +144,15 @@ export function SectorDetailPage() {
 
     return (
         <>
+            {/* ✅ INJECTION SEO DYNAMIQUE POUR LE SECTEUR */}
+            <SEO 
+                title={`${sector.nom} | Nos Secteurs d'Activité - Panda Holding`}
+                description={sector.descriptionCourte}
+                path={`/sectors/${sector.slug}`}
+                image={sector.image}
+                type="website"
+            />
+
             {/* HERO IMMERSIF */}
             <section className="relative pt-20 pb-0">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-4">

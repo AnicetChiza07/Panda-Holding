@@ -4,6 +4,7 @@ import { MapPin, ArrowRight, Phone, AlertCircle } from 'lucide-react';
 import { SafeImage } from '../components/common/SafeImage';
 import { projectService, type ApiProject } from '../services/projectService';
 import { HeroSkeleton, TextSkeleton } from '../components/common/Skeletons';
+import { SEO } from '../components/common/SEO';
 
 // ==========================================
 // TYPES STRICTS POUR LE CONTENU
@@ -102,7 +103,7 @@ export function PortfolioDetailPage() {
         fetchData();
     }, [slug]);
 
-    // ✅ ÉTAT DE CHARGEMENT AVEC SKELETONS (Remplace le simple spinner)
+    // ✅ ÉTAT DE CHARGEMENT AVEC SKELETONS
     if (loading) {
         return (
             <div className="min-h-screen bg-white dark:bg-primary">
@@ -128,6 +129,15 @@ export function PortfolioDetailPage() {
 
     return (
         <>
+            {/* ✅ INJECTION SEO DYNAMIQUE POUR LE PROJET */}
+            <SEO 
+                title={`${project.titre} | Réalisations Panda Holding`}
+                description={project.descriptionLongue[0]?.text || `Découvrez notre réalisation : ${project.titre}, un projet emblématique de Panda Holding en ${project.lieu}.`}
+                path={`/portfolio/${project.slug}`}
+                image={project.imageHero}
+                type="website"
+            />
+
             {/* ==========================================
                 1. HERO SECTION
                 ========================================== */}

@@ -4,7 +4,8 @@ import { Calendar, Clock, ChevronRight, Home, AlertCircle } from 'lucide-react';
 import { SafeImage } from '../components/common/SafeImage'; 
 import { articleService, type ApiArticle } from '../services/articleService';
 import { ArticleCard } from './BlogPage'; 
-import { HeroSkeleton, TextSkeleton } from '../components/common/Skeletons'; // ✅ AJOUT DES SKELETONS
+import { HeroSkeleton, TextSkeleton } from '../components/common/Skeletons'; 
+import { SEO } from '../components/common/SEO'; // ✅ Déjà importé
 
 // ==========================================
 // TYPES POUR LE CONTENU RICHE
@@ -15,21 +16,18 @@ type ContentBlock =
     | { type: 'image'; src: string; caption?: string }
     | { type: 'quote'; text: string; author?: string; role?: string };
 
-// ✅ Cette interface contient TOUS les champs requis par ArticleCard (BlogPage) 
-// + les champs supplémentaires nécessaires à la page de détail.
 interface DisplayArticle {
     id: string;
-    slug: string;              // ✅ OBLIGATOIRE pour le routing
-    isFeatured: boolean;       // ✅ OBLIGATOIRE pour ArticleCard
-    category: string;          // ✅ OBLIGATOIRE pour ArticleCard
-    title: string;             // ✅ OBLIGATOIRE pour ArticleCard
-    excerpt: string;           // ✅ OBLIGATOIRE pour ArticleCard
-    date: string;              // ✅ OBLIGATOIRE pour ArticleCard
-    readTime: string;          // ✅ OBLIGATOIRE pour ArticleCard
-    author: string;            // ✅ OBLIGATOIRE pour ArticleCard
-    authorInitials: string;    // ✅ OBLIGATOIRE pour ArticleCard
-    image: string;             // ✅ OBLIGATOIRE pour ArticleCard
-    // Champs supplémentaires pour la page détail
+    slug: string;
+    isFeatured: boolean;
+    category: string;
+    title: string;
+    excerpt: string;
+    date: string;
+    readTime: string;
+    author: string;
+    authorInitials: string;
+    image: string;
     authorRole: string;
     content: ContentBlock[];
 }
@@ -134,7 +132,6 @@ export function ArticleDetailPage() {
         fetchData();
     }, [slug]);
 
-    // ✅ ÉTAT DE CHARGEMENT AVEC SKELETONS (Remplace le simple spinner)
     if (loading) {
         return (
             <div className="min-h-screen bg-white dark:bg-primary">
@@ -184,6 +181,15 @@ export function ArticleDetailPage() {
 
     return (
         <>
+            {/* ✅ INJECTION SEO DYNAMIQUE POUR L'ARTICLE */}
+            <SEO 
+                title={`${article.title} | Actualités Panda Holding`}
+                description={article.excerpt || `Découvrez les détails de l'article : ${article.title} sur Panda Holding.`}
+                path={`/blog/${article.slug}`}
+                image={article.image}
+                type="article"
+            />
+
             {/* HERO DE L'ARTICLE */}
             <section className="relative pt-20 pb-0">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-4">

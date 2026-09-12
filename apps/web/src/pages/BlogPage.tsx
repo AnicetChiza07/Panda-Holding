@@ -5,6 +5,7 @@ import { PageHero } from '../components/common/PageHero';
 import { SafeImage } from '../components/common/SafeImage';
 import { CardSkeleton } from '../components/common/Skeletons'; // ✅ Corrigé avec le 's'
 import { articleService, type ApiArticle } from '../services/articleService';
+import { SEO } from '../components/common/SEO';
 
 // ==========================================
 // TYPES (Adaptés pour le composant ArticleCard)
@@ -234,6 +235,12 @@ export function BlogPage() {
     if (loading) {
         return (
             <>
+                <SEO 
+                    title="Actualités, Analyses et Insights | Blog Panda Holding"
+                    description="Restez informé des dernières actualités économiques, analyses de marché et réflexions sur l'entrepreneuriat et le développement en RDC par les experts de Panda Holding."
+                    path="/blog"
+                />
+
                 <PageHero
                     title="Actualités"
                     highlight="& Analyses"

@@ -1,3 +1,4 @@
+import { SEO } from '../components/common/SEO';
 import { PageHero } from '../components/common/PageHero';
 import { AboutSection } from '../components/sections/AboutSection';
 import { StatsSection } from '../components/sections/StatsSection';
@@ -11,6 +12,13 @@ import { PartnersSection } from '../components/sections/PartnersSection';
 export function AboutPage() {
     return (
         <>
+            {/* Injection SEO spécifique à la page À Propos */}
+            <SEO 
+                title="À Propos de Nous | Histoire, Vision et Équipe - Panda Holding"
+                description="Découvrez l'histoire, les valeurs, la vision et l'équipe dirigeante de Panda Holding, acteur majeur du développement économique et de l'investissement en RDC."
+                path="/about"
+            />
+
             {/* 1. Hero Section spécifique à la page */}
             <PageHero
                 title="Notre Histoire"
@@ -26,7 +34,10 @@ export function AboutPage() {
             <StatsSection />
             <VisionSection />
             <MissionSection />
-            <FAQSection />
+            
+            {/* Note : Si FAQSection est utilisé ici, il injectera aussi son propre schéma FAQ en plus du SEO de la page, ce qui est excellent. */}
+            <FAQSection /> 
+            
             <ExecutiveSection />
             <ValuesMarquee />
             <PartnersSection />

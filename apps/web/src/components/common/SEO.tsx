@@ -1,11 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
+interface FAQItem {
+    question: string;
+    answer: string;
+}
+
 interface SEOProps {
     title?: string;
     description?: string;
     image?: string;
     path?: string;
     type?: 'website' | 'article';
+    faqData?: FAQItem[];
 }
 
 export const SEO = ({
@@ -13,13 +19,14 @@ export const SEO = ({
     description = "Panda Holding est une entreprise basée à Kinshasa, RDC, dédiée à l'investissement, l'innovation et le développement stratégique des entreprises africaines.",
     image = "/panda-logo.png",
     path = "",
-    type = "website"
+    type = "website",
+    faqData
 }: SEOProps) => {
     const siteUrl = "https://panda-holding-web.vercel.app";
     const fullUrl = `${siteUrl}${path}`;
     const fullImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
-    // Données structurées pour Google (Organization)
+    // 1. Schéma Organization (Toujours présent)
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Organization",
@@ -40,6 +47,20 @@ export const SEO = ({
         },
         "email": "arthurmeshearji@gmail.com"
     };
+
+    // 2. Schéma FAQPage (Généré uniquement si faqData est fourni)
+    const faqSchema = faqData && faqData.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqData.map(item => ({
+            "@type": "Question",
+            "name": item.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.answer
+            }
+        }))
+    } : null;
 
     return (
         <Helmet>
@@ -70,6 +91,13 @@ export const SEO = ({
             <script type="application/ld+json">
                 {JSON.stringify(organizationSchema)}
             </script>
+            
+            {/* Injection conditionnelle du schéma FAQ */}
+            {faqSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(faqSchema)}
+                </script>
+            )}
         </Helmet>
     );
 };

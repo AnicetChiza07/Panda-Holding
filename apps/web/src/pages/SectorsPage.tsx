@@ -5,6 +5,7 @@ import { PageHero } from '../components/common/PageHero';
 import { CardSkeleton } from '../components/common/Skeletons';
 import { ValuesMarquee } from '../components/sections/ValuesMarquee';
 import { sectorService, type ApiSector } from '../services/sectorService';
+import { SEO } from '../components/common/SEO';
 
 // ==========================================
 // TYPES & MAPPING
@@ -54,6 +55,12 @@ export function SectorsPage() {
     if (loading) {
         return (
             <>
+                <SEO 
+                    title="Nos Secteurs d'Activité et Expertises | Panda Holding"
+                    description="Explorez les domaines d'investissement et d'expertise de Panda Holding : développement stratégique, innovation et croissance des entreprises en République Démocratique du Congo."
+                    path="/sectors"
+                />
+
                 <PageHero 
                     title="Nos Secteurs" 
                     highlight="d'Intervention" 
