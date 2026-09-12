@@ -286,7 +286,7 @@ export function BlogPage() {
                 ]}
             />
 
-            <section className="py-24 lg:py-32 bg-white dark:bg-primary relative overflow-hidden">
+            <section className="py-24 lg:py-32 bg-gray-100/70 dark:bg-black/10 relative overflow-hidden">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     
                     {/* FILTRES DYNAMIQUES */}

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
     FileText, Briefcase, Mail, Users, Image as ImageIcon, 
-    TrendingUp, Clock, Loader2, Building2, ArrowRight
+    TrendingUp, Clock, Loader2, Building2, ArrowRight, MessageSquare
 } from 'lucide-react';
 import { dashboardService } from '../services/dashboardService';
 import type { DashboardStats, RecentMessage, RecentArticle, RecentProject } from '../services/dashboardService';
@@ -25,10 +25,23 @@ const DashboardPage = () => {
                     dashboardService.getRecentProjects().catch(() => [])
                 ]);
 
-                if (statsRes) setStats(statsRes);
-                setRecentMessages(messagesRes);
-                setRecentArticles(articlesRes);
-                setRecentProjects(projectsRes);
+                // ✅ DEBUG : Voir ce que l'API renvoie vraiment
+                console.log('Stats response:', statsRes);
+                console.log('Messages response:', messagesRes);
+                console.log('Articles response:', articlesRes);
+                console.log('Projects response:', projectsRes);
+
+                // ✅ Extraction correcte des données
+                if (statsRes?.data?.stats) {
+                    setStats(statsRes.data.stats);
+                } else if (statsRes?.stats) {
+                    setStats(statsRes.stats);
+                }
+                
+                // ✅ Gestion flexible des réponses
+                setRecentMessages(messagesRes?.data || messagesRes || []);
+                setRecentArticles(articlesRes?.data || articlesRes || []);
+                setRecentProjects(projectsRes?.data || projectsRes || []);
             } catch (error) {
                 console.error('Erreur chargement dashboard:', error);
             } finally {
@@ -40,20 +53,13 @@ const DashboardPage = () => {
     }, []);
 
     const statCards = [
-        { title: 'Articles', value: stats?.articles || 0, icon: FileText, color: 'text-[#46c2c5]', bg: 'bg-[#46c2c5]/10', link: '/articles' },
-        { title: 'Projets', value: stats?.projects || 0, icon: Briefcase, color: 'text-[#023047]', bg: 'bg-[#023047]/10', link: '/projects' },
-        { title: 'Partenaires', value: stats?.partners || 0, icon: Building2, color: 'text-[#F4A100]', bg: 'bg-[#F4A100]/10', link: '/partners' },
-        { 
-            title: 'Messages', 
-            value: stats?.unreadMessages || 0, 
-            subtitle: `${stats?.totalMessages || 0} au total`, 
-            icon: Mail, 
-            color: 'text-red-500', 
-            bg: 'bg-red-50', 
-            link: '/messages' 
-        },
-        { title: 'Secteurs', value: stats?.sectors || 0, icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50', link: '/sectors' },
-        { title: 'Carrousel', value: stats?.carousel || 0, icon: ImageIcon, color: 'text-pink-500', bg: 'bg-pink-50', link: '/carousel' },
+        { title: 'Articles', value: stats?.articles?.total || 0, subtitle: `${stats?.articles?.active || 0} actifs`, icon: FileText, color: 'text-[#46c2c5]', bg: 'bg-[#46c2c5]/10', link: '/articles' },
+        { title: 'Projets', value: stats?.projects?.total || 0, subtitle: `${stats?.projects?.active || 0} actifs`, icon: Briefcase, color: 'text-[#023047]', bg: 'bg-[#023047]/10', link: '/projects' },
+        { title: 'Partenaires', value: stats?.partners?.total || 0, subtitle: `${stats?.partners?.active || 0} actifs`, icon: Building2, color: 'text-[#F4A100]', bg: 'bg-[#F4A100]/10', link: '/partners' },
+        { title: 'Témoignages', value: stats?.testimonials?.total || 0, subtitle: `${stats?.testimonials?.active || 0} actifs`, icon: MessageSquare, color: 'text-purple-600', bg: 'bg-purple-100', link: '/testimonials' },
+        { title: 'Messages', value: stats?.messages?.unread || 0, subtitle: `${stats?.messages?.total || 0} au total`, icon: Mail, color: 'text-red-500', bg: 'bg-red-50', link: '/messages' },
+        { title: 'Secteurs', value: stats?.sectors?.total || 0, subtitle: `${stats?.sectors?.active || 0} actifs`, icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-50', link: '/sectors' },
+        { title: 'Carrousel', value: stats?.carousel?.total || 0, subtitle: `${stats?.carousel?.active || 0} actifs`, icon: ImageIcon, color: 'text-pink-500', bg: 'bg-pink-50', link: '/carousel' },
     ];
 
     if (loading) {
@@ -180,10 +186,9 @@ const DashboardPage = () => {
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="font-semibold text-gray-900 truncate">{article.title ?? 'Sans titre'}</p>
-                                        {/* ✅ Vérification de type stricte sans 'any' */}
                                         <p className="text-sm text-gray-600 truncate">
                                             {typeof article.sector === 'object' && article.sector !== null && 'name' in article.sector 
-                                                ? article.sector.name 
+                                                ? (article.sector as { name: string }).name
                                                 : 'Non catégorisé'}
                                         </p>
                                         <div className="flex items-center gap-2 mt-1.5">

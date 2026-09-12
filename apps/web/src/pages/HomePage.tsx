@@ -4,6 +4,7 @@ import { AboutSection } from '../components/sections/AboutSection';
 import { ObjectivesSection } from '../components/sections/ObjectivesSection';
 import { ActivitiesCarousel } from '../components/sections/ActivitiesCarousel';
 import { LatestArticles } from '../components/sections/LatestArticles';
+import { TestimonialsMarquee } from '../components/sections/TestimonialsMarquee';
 import { PartnersSection } from '../components/sections/PartnersSection';
 
 export function HomePage() {
@@ -15,6 +16,7 @@ export function HomePage() {
             <ObjectivesSection />
             <ActivitiesCarousel />
             <LatestArticles />
+            <TestimonialsMarquee />
             <PartnersSection />
         </>
     );

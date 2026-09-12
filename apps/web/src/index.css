@@ -192,3 +192,100 @@ ANIMATIONS D'ENTRÉE
 .delay-600 { animation-delay: 0.6s; }
 .delay-700 { animation-delay: 0.7s; }
 .delay-800 { animation-delay: 0.8s; }
+
+/* ==========================================
+   ANIMATION MARQUEE AVEC PILLS
+   ========================================== */
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee-right {
+    animation: marquee 40s linear infinite;
+}
+
+.animate-marquee-left {
+    animation: marquee 40s linear infinite reverse;
+}
+
+.animate-marquee-right:hover,
+.animate-marquee-left:hover {
+    animation-play-state: paused;
+}
+
+/* Effet de fade élégant sur les bords */
+.marquee-fade {
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 10%,
+        black 90%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 10%,
+        black 90%,
+        transparent 100%
+    );
+}
+
+/* ==========================================
+   ANIMATIONS TÉMOIGNAGES - MARQUEE PREMIUM
+   ========================================== */
+
+@keyframes testimonialScrollLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes testimonialScrollRight {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.animate-testimonial-scroll-left {
+    animation: testimonialScrollLeft 50s linear infinite;
+}
+
+.animate-testimonial-scroll-right {
+    animation: testimonialScrollRight 50s linear infinite;
+}
+
+.animate-testimonial-scroll-left:hover,
+.animate-testimonial-scroll-right:hover {
+    animation-play-state: paused;
+}
+
+/* Effet de fade élégant sur les bords */
+.testimonials-marquee-container {
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+}

@@ -10,6 +10,7 @@ import contactRoutes from './contactRoutes';
 import uploadRoutes from './uploadRoutes';
 import userRoutes from './userRoutes';
 import dashboardRoutes from './dashboardRoutes';
+import testimonialRoutes from './testimonialRoutes';
 
 const router = express.Router();
 
@@ -19,6 +20,7 @@ router.use('/articles', articleRoutes);
 router.use('/projects', projectRoutes);
 router.use('/partners', partnerRoutes);
 router.use('/faqs', faqRoutes);
+router.use('/testimonials', testimonialRoutes);
 router.use('/carousel', carouselRoutes);
 router.use('/contact', contactRoutes);
 router.use('/upload', uploadRoutes);

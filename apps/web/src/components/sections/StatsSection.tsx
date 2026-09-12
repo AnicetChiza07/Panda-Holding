@@ -42,7 +42,7 @@ const statsData = [
 export function StatsSection() {
     return (
         // Fond subtil en light ET dark pour créer une séparation visuelle professionnelle
-        <section className="py-24 bg-gray-100/70 dark:bg-black/20 relative">
+        <section className="py-24 bg-gray-100/70 dark:bg-black/10 relative">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Grille responsive : 1 → 2 → 4 colonnes */}

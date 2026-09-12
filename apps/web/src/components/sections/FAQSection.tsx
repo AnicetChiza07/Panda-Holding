@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { ChevronDown, HelpCircle } from 'lucide-react'; // ✅ Loader2 supprimé
+import { ChevronDown, HelpCircle } from 'lucide-react';
 import { faqService, type ApiFaq } from '../../services/faqService';
+import { Pulse } from '../../components/common/Skeletons';
 
 // ==========================================
 // INTERFACES TIPTAP (Strictement typées)
@@ -102,16 +103,16 @@ export function FAQSection() {
         setOpenId(openId === id ? null : id);
     };
 
-    // ✅ État de chargement avec Skeleton (Remplace le simple spinner)
+    // ✅ ÉTAT DE CHARGEMENT AVEC SKELETON (Refactorisé avec Pulse)
     if (loading) {
         return (
             <section className="py-24 lg:py-32 bg-gray-50/40 dark:bg-gray-900/40 relative overflow-hidden">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     {/* En-tête Skeleton */}
                     <div className="max-w-3xl mx-auto text-center mb-16 space-y-4 animate-fadeInUp">
-                        <div className="w-40 h-8 bg-gray-200 dark:bg-white/10 animate-pulse rounded-full mx-auto" />
-                        <div className="w-3/4 h-10 bg-gray-200 dark:bg-white/10 animate-pulse rounded-lg mx-auto" />
-                        <div className="w-20 h-1 bg-gray-200 dark:bg-white/10 animate-pulse rounded-full mx-auto" />
+                        <Pulse className="w-40 h-8 rounded-full mx-auto" />
+                        <Pulse className="w-3/4 h-10 rounded-lg mx-auto" />
+                        <Pulse className="w-20 h-1 rounded-full mx-auto" />
                     </div>
 
                     {/* Accordéons Skeleton (4 items) */}
@@ -119,8 +120,8 @@ export function FAQSection() {
                         {Array.from({ length: 4 }).map((_, i) => (
                             <div key={i} className="rounded-2xl border border-gray-200/60 dark:border-white/10 overflow-hidden bg-white dark:bg-white/5">
                                 <div className="px-6 py-5 flex items-center justify-between">
-                                    <div className="w-3/4 h-5 bg-gray-200 dark:bg-white/10 animate-pulse rounded" />
-                                    <div className="w-8 h-8 bg-gray-200 dark:bg-white/10 animate-pulse rounded-full flex-shrink-0" />
+                                    <Pulse className="w-3/4 h-5 rounded" />
+                                    <Pulse className="w-8 h-8 rounded-full flex-shrink-0" />
                                 </div>
                             </div>
                         ))}

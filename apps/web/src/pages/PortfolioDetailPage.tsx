@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, ArrowRight, Phone, AlertCircle } from 'lucide-react'; // ✅ Loader2 supprimé
+import { MapPin, ArrowRight, Phone, AlertCircle } from 'lucide-react';
 import { SafeImage } from '../components/common/SafeImage';
 import { projectService, type ApiProject } from '../services/projectService';
-import { HeroSkeleton, TextSkeleton } from '../components/common/Skeletons'; // ✅ AJOUT DES SKELETONS
+import { HeroSkeleton, TextSkeleton } from '../components/common/Skeletons';
 
 // ==========================================
 // TYPES STRICTS POUR LE CONTENU

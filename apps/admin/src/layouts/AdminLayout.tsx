@@ -3,7 +3,7 @@ import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
     LayoutDashboard, Building2, FileText, Briefcase, Users, 
-    HelpCircle, Image as ImageIcon, MessageSquare, LogOut, Menu, X
+    HelpCircle, Image as ImageIcon, MessageSquare, LogOut, Menu, X, Quote // ✅ Ajout de Quote
 } from 'lucide-react';
 
 const AdminLayout = () => {
@@ -28,6 +28,8 @@ const AdminLayout = () => {
         },
         { title: 'MEDIAS', items: [{ path: '/carousel', label: 'Carrousel', icon: ImageIcon }] },
         { title: 'COMMUNICATION', items: [{ path: '/messages', label: 'Messages', icon: MessageSquare }] },
+        // ✅ NOUVELLE SECTION AJOUTÉE
+        { title: 'AVIS CLIENTS', items: [{ path: '/testimonials', label: 'Témoignages', icon: Quote }] },
     ];
 
     const handleLogout = () => {
@@ -64,7 +66,6 @@ const AdminLayout = () => {
                 />
             )}
 
-            {/* ✅ Sidebar : fixed PARTOUT (mobile et desktop). Plus de lg:static */}
             <aside className={`
                 fixed top-0 left-0 z-50 h-dvh w-64 bg-[#023047] text-white shadow-xl transform transition-transform duration-300 ease-in-out overflow-x-hidden overflow-y-auto
                 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -149,7 +150,6 @@ const AdminLayout = () => {
                 </div>
             </aside>
 
-            {/* ✅ Contenu principal : Ajout de lg:ml-64 pour laisser la place à la sidebar fixed */}
             <div className="flex-1 flex flex-col min-w-0 lg:ml-64 transition-all duration-300">
                 <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 lg:px-8 sticky top-0 z-30 shrink-0">
                     <button 

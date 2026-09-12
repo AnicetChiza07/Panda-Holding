@@ -1,5 +1,4 @@
-// Composant de base pour un bloc gris qui pulse
-const Pulse = ({ className = "" }: { className?: string }) => (
+export const Pulse = ({ className = "" }: { className?: string }) => (
     <div className={`bg-gray-200 dark:bg-white/10 animate-pulse rounded-lg ${className}`}></div>
 );
 

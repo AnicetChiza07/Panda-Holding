@@ -41,7 +41,7 @@ const features = [
 export function AboutSection({ className }: AboutSectionProps) {
     return (
         // 3. Si une className est passée, on l'utilise. Sinon, on utilise le fond par défaut
-        <section className={`py-20 lg:py-24 relative overflow-hidden ${className || 'bg-gray-100/70 dark:bg-gray-900/40'}`}>
+        <section className={`py-20 lg:py-24 relative overflow-hidden ${className || ' dark:bg-gray-900/0'}`}>
             
             {/* Éléments décoratifs de fond */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-secondary/10 to-accent/10 rounded-full blur-3xl -z-10"></div>

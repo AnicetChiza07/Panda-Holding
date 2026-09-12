@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, ArrowRight } from 'lucide-react'; // ✅ Loader2 supprimé
+import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { SafeImage } from '../common/SafeImage';
-import { CardSkeleton } from '../common/Skeletons'; // ✅ AJOUT DU SKELETON
+import { CardSkeleton, Pulse } from '../common/Skeletons';
 import { articleService, type ApiArticle } from '../../services/articleService';
 
 // ==========================================
@@ -71,19 +71,19 @@ export function LatestArticles() {
         fetchLatestArticles();
     }, []);
 
-    // ✅ État de chargement avec Skeleton (Remplace le simple spinner)
+    // ✅ ÉTAT DE CHARGEMENT AVEC SKELETON (Refactorisé avec Pulse)
     if (loading) {
         return (
-            <section className="py-24 lg:py-32 bg-gray-50/40 dark:bg-gray-900/40 relative">
+            <section className="py-24 lg:py-32 bg-gray-100/70 dark:bg-black/10 relative">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* En-tête Skeleton */}
+                    {/* En-tête Skeleton avec Pulse */}
                     <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 lg:mb-16 animate-fadeInUp">
                         <div className="max-w-2xl space-y-4">
-                            <div className="w-32 h-8 bg-gray-200 dark:bg-white/10 animate-pulse rounded-full" />
-                            <div className="w-3/4 h-10 bg-gray-200 dark:bg-white/10 animate-pulse rounded-lg" />
-                            <div className="w-full h-4 bg-gray-200 dark:bg-white/10 animate-pulse rounded" />
+                            <Pulse className="w-32 h-8 rounded-full" />
+                            <Pulse className="w-3/4 h-10 rounded-lg" />
+                            <Pulse className="w-full h-4 rounded" />
                         </div>
-                        <div className="w-40 h-10 bg-gray-200 dark:bg-white/10 animate-pulse rounded-full hidden lg:block" />
+                        <Pulse className="w-40 h-10 rounded-full hidden lg:block" />
                     </div>
 
                     {/* Grille de Cartes Skeleton (3 cartes pour les derniers articles) */}
@@ -97,8 +97,9 @@ export function LatestArticles() {
         );
     }
 
+    // Rendu principal
     return (
-        <section className="py-24 lg:py-32 bg-gray-50/40 dark:bg-gray-900/40 relative">
+        <section className="py-24 lg:py-32 bg-gray-100/70 dark:bg-black/10 relative">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* ==========================================

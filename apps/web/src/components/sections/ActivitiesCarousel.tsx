@@ -185,7 +185,7 @@ export function ActivitiesCarousel() {
     // ==========================================
     return (
         <section
-            className="py-24 lg:py-32 bg-white dark:bg-primary relative overflow-hidden"
+            className="py-24 lg:py-32 relative overflow-hidden"
             onMouseEnter={pauseAutoPlay}
             onMouseLeave={resumeAutoPlay}
         >

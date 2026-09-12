@@ -4,6 +4,8 @@ import { StatsSection } from '../components/sections/StatsSection';
 import { VisionSection } from '../components/sections/VisionSection'; 
 import { MissionSection } from '../components/sections/MissionSection'; 
 import { FAQSection } from '../components/sections/FAQSection'; 
+import { ExecutiveSection } from '../components/sections/ExecutiveSection';
+import { ValuesMarquee } from '../components/sections/ValuesMarquee';
 import { PartnersSection } from '../components/sections/PartnersSection';
 
 export function AboutPage() {
@@ -20,11 +22,13 @@ export function AboutPage() {
                 ]}
             />
 
-            <AboutSection className="bg-gray-100/70 dark:bg-black/20" />
+            <AboutSection className="bg-gray-100/70 dark:bg-black/10" />
             <StatsSection />
             <VisionSection />
             <MissionSection />
             <FAQSection />
+            <ExecutiveSection />
+            <ValuesMarquee />
             <PartnersSection />
         </>
     );

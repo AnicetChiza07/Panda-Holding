@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Building2 } from 'lucide-react'; // ✅ Loader2 supprimé
+import { Building2 } from 'lucide-react';
 import { partnerService, type ApiPartner } from '../../services/partnerService';
+import { Pulse } from '../../components/common/Skeletons';
 
 // ==========================================
 // TYPES & MAPPING
@@ -41,22 +42,22 @@ export function PartnersSection() {
         fetchPartners();
     }, []);
 
-    // ✅ État de chargement avec Skeleton (Remplace le simple spinner)
+    // ✅ ÉTAT DE CHARGEMENT AVEC SKELETON (Refactorisé avec Pulse)
     if (loading) {
         return (
             <section className="py-20 lg:py-24 bg-white dark:bg-primary border-y border-gray-100 dark:border-white/5 relative overflow-hidden">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     {/* En-tête Skeleton */}
                     <div className="max-w-2xl space-y-4 mb-12 animate-fadeInUp">
-                        <div className="w-32 h-8 bg-gray-200 dark:bg-white/10 animate-pulse rounded-full" />
-                        <div className="w-3/4 h-10 bg-gray-200 dark:bg-white/10 animate-pulse rounded-lg" />
-                        <div className="w-full h-4 bg-gray-200 dark:bg-white/10 animate-pulse rounded" />
+                        <Pulse className="w-32 h-8 rounded-full" />
+                        <Pulse className="w-3/4 h-10 rounded-lg" />
+                        <Pulse className="w-full h-4 rounded" />
                     </div>
                     
-                    {/* Logos Skeleton (Ligne statique de placeholders) */}
+                    {/* Logos Skeleton */}
                     <div className="flex flex-wrap justify-center items-center gap-16 lg:gap-24 py-4">
                         {Array.from({ length: 6 }).map((_, i) => (
-                            <div key={i} className="w-32 h-12 bg-gray-200 dark:bg-white/10 animate-pulse rounded-lg" />
+                            <Pulse key={i} className="w-32 h-12 rounded-lg" />
                         ))}
                     </div>
                 </div>

@@ -14,6 +14,7 @@ import FaqsPage from './pages/FaqsPage';
 import CarouselPage from './pages/CarouselPage';
 import MessagesPage from './pages/MessagesPage';
 import ProfilePage from './pages/ProfilePage';
+import TestimonialsPage from './pages/TestimonialsPage';
 
 function App() {
     return (
@@ -58,6 +59,7 @@ function App() {
                         <Route path="/carousel" element={<CarouselPage />} />
                         <Route path="/messages" element={<MessagesPage />} />
                         <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/testimonials" element={<TestimonialsPage />} />
                     </Route>
 
                     <Route path="*" element={<Navigate to="/" replace />} />

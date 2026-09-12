@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Target, ArrowRight, Briefcase, Globe, TrendingUp } from 'lucide-react';
 import { PageHero } from '../components/common/PageHero'; 
-import { CardSkeleton } from '../components/common/Skeletons'; // ✅ AJOUT DU SKELETON
+import { CardSkeleton } from '../components/common/Skeletons';
+import { ValuesMarquee } from '../components/sections/ValuesMarquee';
 import { sectorService, type ApiSector } from '../services/sectorService';
 
 // ==========================================
@@ -105,7 +106,7 @@ export function SectorsPage() {
                 breadcrumbs={[{ label: "Accueil", path: "/" }, { label: "Secteurs" }]}
             />
 
-            <section className="py-24 lg:py-32 bg-gray-100/70 dark:bg-gray-900/40 relative overflow-hidden">
+            <section className="py-24 lg:py-32 bg-gray-100/70 dark:bg-black/10 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
@@ -170,6 +171,8 @@ export function SectorsPage() {
                     </div>
                 </div>
             </section>
+
+            <ValuesMarquee />
         </>
     );
 }

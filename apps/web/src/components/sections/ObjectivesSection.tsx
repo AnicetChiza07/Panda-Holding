@@ -38,7 +38,7 @@ const objectives = [
 export function ObjectivesSection() {
     return (
         // Fond de section gris clair pour la cohérence
-        <section className="py-24 lg:py-32 bg-gray-100/70 dark:bg-gray-900/40 relative">
+        <section className="py-24 lg:py-32 bg-gray-100/70 dark:bg-black/10 relative">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Layout 40/60 (2 colonnes sur 5 pour la gauche, 3 sur 5 pour la droite) */}

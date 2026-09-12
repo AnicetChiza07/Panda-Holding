@@ -1,14 +1,15 @@
 import api from './api';
 
+// ✅ 1. Mise à jour de la structure pour correspondre EXACTEMENT au backend
 export interface DashboardStats {
-    articles: number;
-    projects: number;
-    partners: number;
-    sectors: number;
-    faqs: number;
-    carousel: number;
-    totalMessages: number;
-    unreadMessages: number;
+    articles: { total: number; active: number };
+    carousel: { total: number; active: number };
+    partners: { total: number; active: number };
+    sectors: { total: number; active: number };
+    projects: { total: number; active: number };
+    testimonials: { total: number; active: number }; // ✅ Ajouté
+    messages: { total: number; unread: number };
+    users: { total: number };
 }
 
 export interface RecentMessage {
@@ -16,14 +17,15 @@ export interface RecentMessage {
     name?: string;
     email?: string;
     subject?: string;
-    isRead?: boolean;
+    isRead: boolean;
     createdAt: string;
 }
 
 export interface RecentArticle {
     _id: string;
     title?: string;
-    sector?: { name?: string } | string; 
+    // ✅ Typage propre pour éviter le 'any'
+    sector?: { _id: string; name: string } | string; 
     isFeatured?: boolean;
     createdAt: string;
 }
@@ -37,20 +39,20 @@ export interface RecentProject {
 }
 
 export const dashboardService = {
-    getStats: async (): Promise<DashboardStats> => {
-        const response = await api.get<{ success: boolean; data: DashboardStats }>('/dashboard/stats');
-        return response.data.data;
+    getStats: async () => {
+        const response = await api.get('/dashboard/stats');
+        return response.data; // Renvoie { success: true, data: { stats: {...}, recentArticles: [...] } }
     },
-    getRecentMessages: async (): Promise<RecentMessage[]> => {
-        const response = await api.get<{ success: boolean; data: RecentMessage[] }>('/dashboard/recent-messages');
-        return response.data.data;
+    getRecentMessages: async () => {
+        const response = await api.get('/dashboard/recent-messages');
+        return response.data; // Renvoie { success: true, data: [...] }
     },
-    getRecentArticles: async (): Promise<RecentArticle[]> => {
-        const response = await api.get<{ success: boolean; data: RecentArticle[] }>('/dashboard/recent-articles');
-        return response.data.data;
+    getRecentArticles: async () => {
+        const response = await api.get('/dashboard/recent-articles');
+        return response.data;
     },
-    getRecentProjects: async (): Promise<RecentProject[]> => {
-        const response = await api.get<{ success: boolean; data: RecentProject[] }>('/dashboard/recent-projects');
-        return response.data.data;
-    },
+    getRecentProjects: async () => {
+        const response = await api.get('/dashboard/recent-projects');
+        return response.data;
+    }
 };
