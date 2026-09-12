@@ -89,7 +89,7 @@ function TestimonialCardSkeleton() {
 export function TestimonialsMarquee() {
     const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null); // ✅ NOUVEAU : État d'erreur
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         let isMounted = true;
@@ -97,15 +97,13 @@ export function TestimonialsMarquee() {
         testimonialService.getActiveTestimonials()
             .then((data) => {
                 if (isMounted) {
-                    console.log('✅ Témoignages chargés:', data.length, 'éléments'); // ✅ LOG pour diagnostiquer
                     setTestimonials(data);
                     setError(null);
                     setLoading(false);
                 }
             })
-            .catch((err) => {
+            .catch(() => {
                 if (isMounted) {
-                    console.error('❌ Erreur chargement témoignages:', err); // ✅ LOG détaillé
                     setError('Impossible de charger les témoignages');
                     setLoading(false);
                 }
@@ -116,7 +114,7 @@ export function TestimonialsMarquee() {
         };
     }, []);
 
-    // ✅ 1. État de chargement (Skeleton)
+    // État de chargement (Skeleton)
     if (loading) {
         return (
             <section className="py-20 lg:py-24 bg-white/80 dark:bg-primary border-y border-gray-100 dark:border-white/5 relative overflow-hidden">
@@ -142,7 +140,7 @@ export function TestimonialsMarquee() {
         );
     }
 
-    // ✅ 2. État d'erreur (Message visible)
+    // État d'erreur
     if (error) {
         return (
             <section className="py-20 lg:py-24 bg-white/80 dark:bg-primary border-y border-gray-100 dark:border-white/5">
@@ -166,11 +164,10 @@ export function TestimonialsMarquee() {
         );
     }
 
-    // ✅ 3. État vide (Aucun témoignage actif)
+    // État vide (Aucun témoignage actif)
     if (testimonials.length === 0) {
-        console.log('⚠️ Aucun témoignage actif trouvé'); // ✅ LOG
         return (
-            <section className="py-20 lg:py-24">
+            <section className="py-20 lg:py-24 bg-white/80 dark:bg-primary border-y border-gray-100 dark:border-white/5">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="max-w-2xl mx-auto space-y-4">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/10 rounded-full border border-gray-200 dark:border-white/20">
@@ -191,11 +188,11 @@ export function TestimonialsMarquee() {
         );
     }
 
-    // ✅ 4. Rendu normal
+    // Rendu normal
     const duplicatedTestimonials = [...testimonials, ...testimonials];
 
     return (
-        <section className="py-20 lg:py-24 bg-white/80 dark:bg-primary relative overflow-hidden">
+        <section className="py-20 lg:py-24 bg-white/80 dark:bg-primary border-y border-gray-100 dark:border-white/5 relative overflow-hidden">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12">
                 <div className="max-w-2xl space-y-4 animate-fadeInUp">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 dark:bg-secondary/10 rounded-full border border-primary/10 dark:border-secondary/20">
