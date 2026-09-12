@@ -1,0 +1,10 @@
+# Autoriser tous les robots à explorer le site
+User-agent: *
+Allow: /
+
+# Interdire l'accès au panneau d'administration (si l'URL contient /admin)
+Disallow: /admin/
+Disallow: /api/
+
+# Indiquer l'emplacement du sitemap (nous allons le créer juste après)
+Sitemap: https://panda-holding-web.vercel.app/sitemap.xml
