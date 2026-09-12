@@ -14,13 +14,9 @@ export const testimonialService = {
     getActiveTestimonials: async (): Promise<Testimonial[]> => {
         try {
             const response = await api.get('/testimonials/active');
-            
-            // LOG DE DIAGNOSTIC (À supprimer une fois que ça marche sur Vercel)
-            console.log("📦 RÉPONSE BRUTE API TÉMOIGNAGES:", response.data);
-
             const rawData = response.data;
 
-            // Extraction bulletproof : gère TOUTES les structures possibles
+            // Extraction robuste des données pour gérer toutes les structures de réponse possibles
             if (Array.isArray(rawData)) {
                 return rawData;
             }
@@ -31,11 +27,11 @@ export const testimonialService = {
                 return rawData.results;
             }
 
-            console.warn("Format de données inattendu pour les témoignages:", rawData);
+            // Retourne un tableau vide si le format est inattendu
             return [];
-            
         } catch (error) {
-            console.error('Erreur critique testimonialService:', error);
+            // On garde uniquement le log d'erreur en cas de vrai problème réseau ou serveur
+            console.error('Erreur testimonialService:', error);
             return [];
         }
     }
