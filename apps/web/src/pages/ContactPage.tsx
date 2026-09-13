@@ -138,7 +138,7 @@ export function ContactPage() {
                                             </div>
                                             <div>
                                                 <h4 className="font-semibold text-white text-sm mb-0.5">Téléphone</h4>
-                                                {/* ✅ Lien cliquable pour appel direct sur mobile */}
+                                                {/* Lien cliquable pour appel direct sur mobile */}
                                                 <a 
                                                     href="tel:+243897702531" 
                                                     className="text-white/70 text-sm hover:text-accent transition-colors duration-300"
@@ -154,7 +154,7 @@ export function ContactPage() {
                                             </div>
                                             <div>
                                                 <h4 className="font-semibold text-white text-sm mb-0.5">Email</h4>
-                                                {/* ✅ Lien cliquable pour ouvrir le client mail */}
+                                                {/* Lien cliquable pour ouvrir le client mail */}
                                                 <a 
                                                     href="mailto:arthurmeshearji@gmail.com" 
                                                     className="text-white/70 text-sm hover:text-accent transition-colors duration-300 break-all"
