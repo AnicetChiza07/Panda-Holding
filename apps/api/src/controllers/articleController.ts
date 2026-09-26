@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import { Article } from '../models/Article'; // Assurez-vous que le chemin est correct
+import { Article } from '../models/Article';
 
 // @desc    Récupérer tous les articles
 // @route   GET /api/articles
 // @access  Public
 export const getAllArticles = async (req: Request, res: Response) => {
     try {
-        // ✅ Récupère la limite depuis l'URL (défaut 50) pour éviter de surcharger la DB
+        // Récupère la limite depuis l'URL (défaut 50) pour éviter de surcharger la DB
         const limit = parseInt(req.query.limit as string) || 50;
         
         const articles = await Article.find()
@@ -18,12 +18,13 @@ export const getAllArticles = async (req: Request, res: Response) => {
             count: articles.length,
             data: articles
         });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error("ERREUR BACKEND getAllArticles:", error);
+        const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
         res.status(500).json({
             success: false,
             message: 'Erreur serveur',
-            error: error instanceof Error ? error.message : 'Erreur inconnue'
+            error: errorMessage
         });
     }
 };
@@ -42,12 +43,13 @@ export const getLatestArticles = async (req: Request, res: Response) => {
             count: articles.length,
             data: articles
         });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error("Erreur getLatestArticles:", error);
+        const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
         res.status(500).json({
             success: false,
             message: 'Erreur serveur',
-            error: error instanceof Error ? error.message : 'Erreur inconnue'
+            error: errorMessage
         });
     }
 };
@@ -57,7 +59,15 @@ export const getLatestArticles = async (req: Request, res: Response) => {
 // @access  Public
 export const getArticleBySlug = async (req: Request, res: Response) => {
     try {
-        const article = await Article.findOne({ slug: req.params.slug, isActive: true });
+        // 1. Décoder le slug au cas où il contient des caractères encodés (ex: %20 pour un espace)
+        const decodedSlug = decodeURIComponent(req.params.slug);
+
+        // 2. Recherche insensible à la casse (option 'i') et exacte (début '^' et fin '$')
+        // Cela permet de trouver l'article même si l'URL a des majuscules/minuscules différentes de la DB
+        const article = await Article.findOne({ 
+            slug: { $regex: new RegExp(`^${decodedSlug}$`, 'i') },
+            isActive: true 
+        });
 
         if (!article) {
             return res.status(404).json({
@@ -70,12 +80,13 @@ export const getArticleBySlug = async (req: Request, res: Response) => {
             success: true,
             data: article
         });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error("Erreur getArticleBySlug:", error);
+        const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
         res.status(500).json({
             success: false,
             message: 'Erreur serveur',
-            error: error instanceof Error ? error.message : 'Erreur inconnue'
+            error: errorMessage
         });
     }
 };
@@ -91,12 +102,13 @@ export const createArticle = async (req: Request, res: Response) => {
             message: 'Article créé avec succès',
             data: article
         });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error("Erreur createArticle:", error);
+        const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
         res.status(400).json({
             success: false,
             message: 'Erreur lors de la création',
-            error: error instanceof Error ? error.message : 'Erreur inconnue'
+            error: errorMessage
         });
     }
 };
@@ -124,12 +136,13 @@ export const updateArticle = async (req: Request, res: Response) => {
             message: 'Article mis à jour avec succès',
             data: article
         });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error("Erreur updateArticle:", error);
+        const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
         res.status(400).json({
             success: false,
             message: 'Erreur lors de la mise à jour',
-            error: error instanceof Error ? error.message : 'Erreur inconnue'
+            error: errorMessage
         });
     }
 };
@@ -139,7 +152,6 @@ export const updateArticle = async (req: Request, res: Response) => {
 // @access  Admin
 export const deleteArticle = async (req: Request, res: Response) => {
     try {
-        // ✅ CHANGEMENT ICI : findByIdAndDelete au lieu de findByIdAndUpdate
         const article = await Article.findByIdAndDelete(req.params.id);
 
         if (!article) {
@@ -153,12 +165,13 @@ export const deleteArticle = async (req: Request, res: Response) => {
             success: true,
             message: 'Article supprimé définitivement'
         });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error("Erreur deleteArticle:", error);
+        const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
         res.status(500).json({
             success: false,
             message: 'Erreur serveur',
-            error: error instanceof Error ? error.message : 'Erreur inconnue'
+            error: errorMessage
         });
     }
 };
