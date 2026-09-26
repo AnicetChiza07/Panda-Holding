@@ -59,11 +59,14 @@ export const getLatestArticles = async (req: Request, res: Response) => {
 // @access  Public
 export const getArticleBySlug = async (req: Request, res: Response) => {
     try {
-        // 1. Décoder le slug au cas où il contient des caractères encodés (ex: %20 pour un espace)
-        const decodedSlug = decodeURIComponent(req.params.slug);
+        // 1. Gestion stricte du type : on s'assure d'avoir une chaîne de caractères
+        const rawSlug = req.params.slug;
+        const slugString = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug;
+        
+        // 2. Décoder le slug au cas où il contient des caractères encodés (ex: %20 pour un espace)
+        const decodedSlug = decodeURIComponent(slugString);
 
-        // 2. Recherche insensible à la casse (option 'i') et exacte (début '^' et fin '$')
-        // Cela permet de trouver l'article même si l'URL a des majuscules/minuscules différentes de la DB
+        // 3. Recherche insensible à la casse (option 'i') et exacte (début '^' et fin '$')
         const article = await Article.findOne({ 
             slug: { $regex: new RegExp(`^${decodedSlug}$`, 'i') },
             isActive: true 
